@@ -1,0 +1,6 @@
+{
+  "name": "Campfire Lietuva - Laužo Viryklė",
+  "description": "Aukštos kokybės, Lietuvoje suprojektuota minimalistinė sulankstoma nerūdijančio plieno laužo viryklė Campfire Pro.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

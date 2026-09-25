@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #082519;
+  --color-primary-container: #1f3b2d;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #87a593;
+  --color-forest-deep: #1F3B2D;
+  --color-forest-light: #2D5441;
+  --color-flame-ember: #E4572E;
+  --color-flame-core: #F3A33A;
+  --color-secondary: #ae3108;
+  --color-secondary-container: #fe693f;
+  --color-on-secondary: #ffffff;
+  --color-surface: #fff8f5;
+  --color-surface-stone: #F7F5F0;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #fcf1ec;
+  --color-surface-container: #f6ece7;
+  --color-surface-container-high: #f1e6e1;
+  --color-surface-container-highest: #ebe0db;
+  --color-surface-timber-dark: #1C1917;
+  --color-border-hairline: #DED8CE;
+  --color-on-surface: #1f1b18;
+  --color-on-surface-variant: #424844;
+  --color-outline: #727973;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+  --spacing-space-2xl: 4rem;
+  --spacing-space-3xl: 6rem;
+  --spacing-margin-sm: 1rem;
+  --spacing-margin-lg: 4rem;
+  --spacing-margin: 2rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-gutter-sm: 1rem;
+
+  --font-inter: 'Inter', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
+
+@layer utilities {
+  .font-body-md { font-family: 'Inter', sans-serif; }
+  .text-body-md { font-size: 15px; line-height: 24px; font-weight: 400; }
+  
+  .font-label-caps { font-family: 'Inter', sans-serif; }
+  .text-label-caps { font-size: 11px; line-height: 16px; letter-spacing: 0.14em; font-weight: 600; }
+  
+  .font-label-md { font-family: 'Inter', sans-serif; }
+  .text-label-md { font-size: 14px; line-height: 20px; font-weight: 500; }
+  
+  .font-label-sm { font-family: 'Inter', sans-serif; }
+  .text-label-sm { font-size: 12px; line-height: 16px; font-weight: 500; }
+  
+  .font-body-sm { font-family: 'Inter', sans-serif; }
+  .text-body-sm { font-size: 13px; line-height: 20px; font-weight: 400; }
+
+  .font-body-lg { font-family: 'Inter', sans-serif; }
+  .text-body-lg { font-size: 18px; line-height: 28px; font-weight: 400; }
+  
+  .font-tech-spec { font-family: 'Inter', sans-serif; }
+  .text-tech-spec { font-size: 13px; line-height: 18px; letter-spacing: 0.02em; font-weight: 500; }
+
+  .font-headline-sm { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .text-headline-sm { font-size: 18px; line-height: 26px; font-weight: 600; }
+
+  .font-headline-md { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .text-headline-md { font-size: 22px; line-height: 30px; letter-spacing: -0.01em; font-weight: 600; }
+
+  .font-headline-lg { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .text-headline-lg { font-size: 28px; line-height: 36px; letter-spacing: -0.015em; font-weight: 700; }
+
+  .font-headline-xl { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .text-headline-xl { font-size: 36px; line-height: 44px; letter-spacing: -0.02em; font-weight: 700; }
+
+  .font-display-lg { font-family: 'Plus Jakarta Sans', sans-serif; }
+  .text-display-lg { font-size: 52px; line-height: 60px; letter-spacing: -0.03em; font-weight: 800; }
+}
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: inherit;
+  }
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
