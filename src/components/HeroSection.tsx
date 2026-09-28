@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { HERO_IMAGE_URL } from '../data/productData';
+import backgroundVideo from '../assets/video/videobackground.mp4';
 
 interface HeroSectionProps {
   onBuyNow: () => void;
@@ -15,35 +16,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   language,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [customVideoSrc, setCustomVideoSrc] = useState<string | null>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
-
-  // Load cached custom video from IndexedDB if present
-  useEffect(() => {
-    try {
-      const req = indexedDB.open('CampfireMediaDB', 1);
-      req.onupgradeneeded = () => {
-        if (!req.result.objectStoreNames.contains('videos')) {
-          req.result.createObjectStore('videos');
-        }
-      };
-      req.onsuccess = () => {
-        const db = req.result;
-        if (!db.objectStoreNames.contains('videos')) return;
-        const tx = db.transaction('videos', 'readonly');
-        const getReq = tx.objectStore('videos').get('hero_video');
-        getReq.onsuccess = () => {
-          if (getReq.result instanceof Blob) {
-            const url = URL.createObjectURL(getReq.result);
-            setCustomVideoSrc(url);
-          }
-        };
-      };
-    } catch {
-      // IndexedDB fallback
-    }
-  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -51,66 +23,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         // Autoplay may be restricted until user interaction
       });
     }
-  }, [customVideoSrc]);
-
-  const handleVideoFile = async (file: File) => {
-    if (!file.type.startsWith('video/') && !file.name.match(/\.(mp4|webm|mov|mkv)$/i)) {
-      return;
-    }
-    const url = URL.createObjectURL(file);
-    setCustomVideoSrc(url);
-    setUploadStatus(language === 'LT' ? 'Įkeliama...' : 'Uploading...');
-
-    // Persist to IndexedDB
-    try {
-      const req = indexedDB.open('CampfireMediaDB', 1);
-      req.onsuccess = () => {
-        const db = req.result;
-        const tx = db.transaction('videos', 'readwrite');
-        tx.objectStore('videos').put(file, 'hero_video');
-      };
-    } catch {
-      // Ignore storage errors
-    }
-
-    // Persist to server public/hero-video.mp4 via Vite middleware
-    try {
-      const res = await fetch('/api/upload-hero-video', {
-        method: 'POST',
-        body: file,
-      });
-      if (res.ok) {
-        setUploadStatus(language === 'LT' ? 'Video atnaujintas!' : 'Video updated!');
-        setTimeout(() => setUploadStatus(null), 3000);
-      }
-    } catch {
-      setUploadStatus(null);
-    }
-  };
+  }, []);
 
   return (
-    <section
-      onDragOver={(e) => {
-        e.preventDefault();
-        setIsDragging(true);
-      }}
-      onDragLeave={() => setIsDragging(false)}
-      onDrop={(e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        if (e.dataTransfer.files?.[0]) {
-          handleVideoFile(e.dataTransfer.files[0]);
-        }
-      }}
-      className={`relative w-full overflow-hidden bg-surface-timber-dark min-h-[580px] md:min-h-[660px] flex items-center justify-center transition-all ${
-        isDragging ? 'ring-4 ring-flame-core ring-inset' : ''
-      }`}
-    >
+    <section className="relative w-full overflow-hidden bg-surface-timber-dark min-h-[580px] md:min-h-[660px] flex items-center justify-center">
       {/* Background video on a loop with layered lighting and fallback poster */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
         <video
           ref={videoRef}
-          key={customVideoSrc || 'default'}
           autoPlay
           loop
           muted
@@ -118,9 +38,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           poster={HERO_IMAGE_URL}
           className="w-full h-full object-cover"
         >
-          {customVideoSrc && <source src={customVideoSrc} type="video/mp4" />}
-          <source src="/hero-video.mp4" type="video/mp4" />
-          <source src="/campfire.mp4" type="video/mp4" />
+          <source src={backgroundVideo} type="video/mp4" />
           <img
             src={HERO_IMAGE_URL}
             alt="Campfire Pro lauko bandymas su liepsna miške nakties metu"
@@ -132,22 +50,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute inset-0 bg-surface-timber-dark/25 backdrop-blur-[1px]" />
         <div className="absolute -right-20 -bottom-20 w-96 h-96 rounded-full bg-flame-ember/20 blur-3xl pointer-events-none" />
       </div>
-
-      {/* Video replace/upload trigger badge */}
-      <label className="absolute bottom-4 right-4 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-timber-dark/70 hover:bg-surface-timber-dark/90 text-surface/80 hover:text-surface text-[12px] font-medium backdrop-blur-md border border-border-hairline/20 cursor-pointer shadow-md transition-all active:scale-95">
-        <span className="material-symbols-outlined text-[16px] text-flame-core">video_file</span>
-        <span>{uploadStatus || (language === 'LT' ? 'Įkelti video' : 'Upload video')}</span>
-        <input
-          type="file"
-          accept="video/*,.mp4,.webm,.mov"
-          className="hidden"
-          onChange={(e) => {
-            if (e.target.files?.[0]) {
-              handleVideoFile(e.target.files[0]);
-            }
-          }}
-        />
-      </label>
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-margin-sm lg:px-margin-lg py-space-2xl w-full flex flex-col items-center text-center">
         <div className="max-w-3xl flex flex-col items-center gap-space-sm">

@@ -4,30 +4,10 @@ import path from 'path';
 import fs from 'fs';
 import { defineConfig, type Plugin } from 'vite';
 
-function videoUploadPlugin(): Plugin {
+function uploadPlugin(): Plugin {
   return {
-    name: 'video-upload-plugin',
+    name: 'upload-plugin',
     configureServer(server) {
-      server.middlewares.use('/api/upload-hero-video', (req, res) => {
-        if (req.method === 'POST') {
-          const chunks: Buffer[] = [];
-          req.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
-          req.on('end', () => {
-            const buffer = Buffer.concat(chunks);
-            const publicDir = path.resolve(__dirname, 'public');
-            if (!fs.existsSync(publicDir)) {
-              fs.mkdirSync(publicDir, { recursive: true });
-            }
-            fs.writeFileSync(path.join(publicDir, 'hero-video.mp4'), buffer);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ success: true, message: 'Video successfully saved to public/hero-video.mp4' }));
-          });
-          return;
-        }
-        res.writeHead(405);
-        res.end();
-      });
-
       server.middlewares.use('/api/upload-product-image', (req, res) => {
         if (req.method === 'POST') {
           const chunks: Buffer[] = [];
@@ -53,7 +33,7 @@ function videoUploadPlugin(): Plugin {
 
 export default defineConfig(() => {
   return {
-    plugins: [react(), tailwindcss(), videoUploadPlugin()],
+    plugins: [react(), tailwindcss(), uploadPlugin()],
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '.'),

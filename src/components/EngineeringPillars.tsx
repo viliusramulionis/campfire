@@ -11,7 +11,7 @@ export const EngineeringPillars: React.FC<EngineeringPillarsProps> = ({
   onOpenImageModal,
 }) => {
   return (
-    <section className="w-full bg-surface-container-low py-space-2xl border-b border-border-hairline/40">
+    <section id="apie-virykle" className="w-full bg-surface-container-low py-space-2xl border-b border-border-hairline/40">
       <div className="max-w-[1360px] mx-auto px-margin-sm lg:px-margin-lg">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-xl">

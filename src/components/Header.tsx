@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LOGO_HEADER_URL } from '../data/productData';
+import logo from '../assets/images/logo.svg';
 
 interface HeaderProps {
   cartCount: number;
@@ -44,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
             aria-label="Campfire Lietuva pradžia"
           >
             <img
-              src={LOGO_HEADER_URL}
+              src={logo}
               alt="Campfire Lietuva"
               className="h-14 w-auto object-contain"
               referrerPolicy="no-referrer"
@@ -58,7 +58,13 @@ export const Header: React.FC<HeaderProps> = ({
           aria-label="Pagrindinė navigacija"
         >
           <button
-            onClick={onOpenAbout}
+            onClick={() => scrollToSection('produkto-uzsakymas')}
+            className="px-space-md py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer"
+          >
+            {language === 'LT' ? 'Produkto užsakymas' : 'Product Order'}
+          </button>
+          <button
+            onClick={() => scrollToSection('apie-virykle')}
             className="px-space-md py-space-xs rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors cursor-pointer"
           >
             {language === 'LT' ? 'Apie viryklę' : 'About the Stove'}

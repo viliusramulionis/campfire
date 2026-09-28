@@ -32,7 +32,7 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
   const totalPrice = quantity * basePrice;
 
   return (
-    <section id="apie-virykle" className="w-full bg-surface py-space-2xl border-b border-border-hairline/40">
+    <section id="produkto-uzsakymas" className="w-full bg-surface py-space-2xl border-b border-border-hairline/40">
       <div className="max-w-[1360px] mx-auto px-margin-sm lg:px-margin-lg">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-space-xl">
@@ -53,7 +53,7 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
           {/* Left: Gallery & Zoom */}
           <div className="lg:col-span-7 flex flex-col gap-space-md">
-            <div className="relative rounded-2xl overflow-hidden bg-surface-stone border border-border-hairline shadow-sm group">
+            <div className="hidden relative rounded-2xl overflow-hidden bg-surface-stone border border-border-hairline shadow-sm group sm:block">
               <img
                 src={selectedImage}
                 alt="Campfire Pro produkto nuotrauka"
@@ -76,7 +76,23 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
             </div>
 
             {/* Thumbnails */}
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:hidden">
+              {PRODUCT_IMAGES.map((img, idx) => (
+                <div key={idx} className="relative rounded-xl overflow-hidden aspect-video border border-border-hairline p-0.5">
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    className="w-full h-full object-cover rounded-lg"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute bottom-1 left-1 right-1 bg-surface-timber-dark/80 backdrop-blur-xs text-[10px] text-surface font-label-caps text-center py-0.5 rounded truncate px-1">
+                    {img.tag}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="hidden grid-cols-4 gap-3 sm:grid">
               {PRODUCT_IMAGES.map((img, idx) => {
                 const isActive = selectedImage === img.src;
                 return (
@@ -85,8 +101,8 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
                     onClick={() => setSelectedImage(img.src)}
                     className={`relative rounded-xl overflow-hidden aspect-video border-2 transition-all p-0.5 cursor-pointer ${
                       isActive
-                        ? 'border-secondary ring-2 ring-secondary/30 scale-102 opacity-100'
-                        : 'border-transparent opacity-70 hover:opacity-100 hover:border-border-hairline'
+                        ? 'border-secondary ring-2 ring-secondary/30 scale-102'
+                        : 'border-transparent hover:border-border-hairline'
                     }`}
                   >
                     <img
@@ -132,7 +148,7 @@ export const ProductPurchaseSection: React.FC<ProductPurchaseSectionProps> = ({
             <div className="flex items-center gap-2 p-3 bg-primary-container/10 border border-primary-container/20 rounded-xl text-forest-deep font-label-sm text-label-sm">
               <span className="w-2.5 h-2.5 rounded-full bg-forest-light animate-ping" />
               <span className="font-semibold">
-                {language === 'LT' ? 'Turime sandėlyje Lietuvoje' : 'In stock in Lithuania'}
+                {language === 'LT' ? 'Turime sandėlyje' : 'In stock'}
               </span>
               <span className="text-on-surface-variant ml-auto">
                 {language === 'LT' ? 'Išsiuntimas per 24 val.' : 'Ships in 24h'}
