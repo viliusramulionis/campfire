@@ -1,5 +1,5 @@
 # ---- Build stage ----
-FROM node:24-alpine3.22 AS build
+FROM node:24-alpine AS build
 
 # Set working directory
 WORKDIR /app
@@ -13,7 +13,7 @@ COPY . .
 RUN npm run build
 
 # ---- Production stage ----
-FROM nginx:1.29-alpine
+FROM nginx:alpine
 
 # Copy custom Nginx config (for React Router support)
 # COPY nginx.conf /etc/nginx/conf.d/default.conf
