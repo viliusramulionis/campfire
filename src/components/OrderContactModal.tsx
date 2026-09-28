@@ -273,11 +273,6 @@ export const OrderContactModal: React.FC<OrderContactModalProps> = ({
             {/* Quantity and Price Highlight Card */}
             <div className="flex items-center justify-between p-3.5 bg-surface-container/60 rounded-xl border border-border-hairline">
               <div className="flex items-center gap-3">
-                <img
-                  src="/images/pagrindine_surinkta.jpg"
-                  alt="Campfire Pro"
-                  className="w-12 h-12 rounded-lg object-cover border border-border-hairline"
-                />
                 <div>
                   <div className="font-semibold text-primary text-sm">Campfire Pro</div>
                   <div className="text-xs text-on-surface-variant">
