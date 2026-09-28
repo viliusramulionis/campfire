@@ -136,7 +136,7 @@ export default function App() {
   };
 
   const scrollToPurchase = () => {
-    const el = document.getElementById('apie-virykle');
+    const el = document.getElementById('produkto-uzsakymas');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
