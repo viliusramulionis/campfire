@@ -1,6 +1,7 @@
 import React from 'react';
 import { LOGO_FOOTER_URL } from '../data/productData';
 import { InfoModalType } from './InfoModal';
+import logo from '../assets/images/logo.svg';
 
 interface FooterProps {
   onOpenInfo: (type: InfoModalType) => void;
@@ -20,7 +21,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInfo, language }) => {
                 className="inline-flex items-center cursor-pointer hover:opacity-90 transition-opacity focus:outline-none"
               >
                 <img
-                  src={LOGO_FOOTER_URL}
+                  src={logo}
                   alt="Campfire Lietuva"
                   className="h-12 w-auto object-contain"
                   referrerPolicy="no-referrer"
@@ -115,7 +116,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenInfo, language }) => {
             </div>
           </div>
         </div>
-
+        
         {/* Bottom copyright row */}
         <div className="pt-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-sm border-t border-border-hairline/60">
           <div className="font-label-sm text-label-sm text-on-surface-variant">

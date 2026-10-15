@@ -62,31 +62,31 @@ export const InfoModal: React.FC<InfoModalProps> = ({ type, onClose, language })
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="p-3 bg-surface-container-low rounded-xl border border-border-hairline">
                   <div className="flex items-center gap-2 text-forest-deep font-bold mb-1">
-                    <span className="material-symbols-outlined text-[18px]">mail</span>
-                    <span>El. paštas</span>
+                    <span className="material-symbols-outlined text-[18px]">info</span>
+                    <span>Įmonė</span>
                   </div>
-                  <a href="mailto:info@campfire.lt" className="text-primary hover:underline font-semibold">
-                    info@campfire.lt
-                  </a>
-                  <p className="text-xs text-on-surface-variant mt-1">Atsakome per 1–2 val. d.d.</p>
+                  <p className="font-semibold text-primary">Pauliaus Sungailos i.v. nr: 1549906</p>
                 </div>
                 <div className="p-3 bg-surface-container-low rounded-xl border border-border-hairline">
                   <div className="flex items-center gap-2 text-forest-deep font-bold mb-1">
                     <span className="material-symbols-outlined text-[18px]">call</span>
                     <span>Telefonas</span>
                   </div>
-                  <a href="tel:+37060012345" className="text-primary hover:underline font-semibold">
-                    +370 600 12345
+                  <a href="tel:+37069545458" className="text-primary hover:underline font-semibold">
+                    +37069545458
                   </a>
                   <p className="text-xs text-on-surface-variant mt-1">I–V 09:00 – 18:00</p>
                 </div>
-              </div>
-              <div className="p-3 bg-surface-container-low rounded-xl border border-border-hairline">
-                <div className="flex items-center gap-2 text-forest-deep font-bold mb-1">
-                  <span className="material-symbols-outlined text-[18px]">location_on</span>
-                  <span>Dirbtuvės ir atsiėmimo punktas</span>
+                <div className="p-3 bg-surface-container-low rounded-xl border border-border-hairline sm:col-span-2">
+                  <div className="flex items-center gap-2 text-forest-deep font-bold mb-1">
+                    <span className="material-symbols-outlined text-[18px]">mail</span>
+                    <span>El. paštas</span>
+                  </div>
+                  <a href="mailto:sungaila.paulius1992@gmail.com" className="text-primary hover:underline font-semibold">
+                    sungaila.paulius1992@gmail.com
+                  </a>
+                  <p className="text-xs text-on-surface-variant mt-1">Atsakome per 1–2 val. d.d.</p>
                 </div>
-                <p className="font-semibold text-primary">Gedimino pr. 45, LT-01110 Vilnius, Lietuva</p>
               </div>
             </div>
           ),
