@@ -108,10 +108,8 @@ async function handleCheckout(req, res) {
 
   const amount = quantity * PRODUCT_PRICE_CENTS + SHIPPING_CENTS;
   const orderId = `CAMP-${amount}-${Date.now()}-${randomBytes(4).toString('hex')}`;
-  const acceptUrl = new URL('/', credentials.publicUrl);
-  acceptUrl.searchParams.set('payment', 'success');
-  const cancelUrl = new URL('/', credentials.publicUrl);
-  cancelUrl.searchParams.set('payment', 'cancelled');
+  const acceptUrl = new URL('/api/paysera/accept', credentials.publicUrl);
+  const cancelUrl = new URL('/api/paysera/cancel', credentials.publicUrl);
 
   const paymentData = new URLSearchParams({
     projectid: credentials.projectId,
@@ -217,6 +215,14 @@ async function handleCallback(req, res) {
 export async function payseraApiMiddleware(req, res, next) {
   try {
     const pathname = new URL(req.url, 'http://localhost').pathname;
+    if (pathname === '/accept' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('Payment completed.');
+    }
+    if (pathname === '/cancel' && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('Payment cancelled.');
+    }
     if (pathname === '/checkout' && req.method === 'POST') {
       return await handleCheckout(req, res);
     }

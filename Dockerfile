@@ -18,7 +18,7 @@ FROM node:24-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
-COPY server.mjs ./
+COPY server.mjs ./ 
 COPY server ./server
 COPY --from=build /app/dist ./dist
 
