@@ -11,6 +11,7 @@ app.use('/api/paysera', payseraApiMiddleware);
 app.use(express.static(path.join(rootDirectory, 'dist')));
 app.get(/.*/, (_req, res) => {
   res.sendFile(path.join(rootDirectory, 'dist', 'index.html'));
+  console.log("Running")
 });
 
 app.listen(port, '0.0.0.0', () => {
