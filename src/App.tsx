@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CartItem, Accessory } from './types';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
@@ -49,6 +49,24 @@ export default function App() {
       setShowToast(false);
     }, 3800);
   };
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const paymentStatus = url.searchParams.get('payment');
+    if (!paymentStatus) return;
+
+    triggerToast(
+      paymentStatus === 'success'
+        ? language === 'LT'
+          ? 'Paysera apmokėjimas baigtas. Užsakymo būsena tikrinama.'
+          : 'Paysera payment completed. Your order is being verified.'
+        : language === 'LT'
+          ? 'Apmokėjimas atšauktas. Galite bandyti dar kartą.'
+          : 'Payment was cancelled. You can try again.'
+    );
+    url.searchParams.delete('payment');
+    window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`);
+  }, []);
 
   const handleAddToCart = (quantity: number) => {
     setCartItems((prev) => {
@@ -216,7 +234,7 @@ export default function App() {
         language={language}
       />
 
-      {/* Contact Order Modal via StaticForms */}
+      {/* Paysera checkout */}
       <OrderContactModal
         isOpen={isOrderModalOpen}
         onClose={() => setIsOrderModalOpen(false)}
@@ -224,7 +242,6 @@ export default function App() {
         onUpdateQuantity={(newQty) => setOrderModalQuantity(newQty)}
         basePrice={basePrice}
         language={language}
-        onSuccessToast={(msg) => triggerToast(msg)}
       />
 
       {/* Informational Policy & Story Modals */}

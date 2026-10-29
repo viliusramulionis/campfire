@@ -13,16 +13,14 @@ COPY . .
 RUN npm run build
 
 # ---- Production stage ----
-FROM nginx:alpine
+FROM node:24-alpine
 
-# Copy custom Nginx config (for React Router support)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY server.mjs ./
+COPY server ./server
+COPY --from=build /app/dist ./dist
 
-# Copy build output into Nginx's html directory
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose port 443 for the container
-EXPOSE 80
-
-# Run Nginx in the foreground
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+CMD ["node", "server.mjs"]

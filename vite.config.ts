@@ -3,11 +3,13 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 import fs from 'fs';
 import { defineConfig, type Plugin } from 'vite';
+import { payseraApiMiddleware } from './server/paysera.js';
 
 function uploadPlugin(): Plugin {
   return {
     name: 'upload-plugin',
     configureServer(server) {
+      server.middlewares.use('/api/paysera', payseraApiMiddleware);
       server.middlewares.use('/api/upload-product-image', (req, res) => {
         if (req.method === 'POST') {
           const chunks: Buffer[] = [];
