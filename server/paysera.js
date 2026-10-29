@@ -56,10 +56,10 @@ function createSignature(data, password) {
   return createHash('md5').update(data + password, 'utf8').digest('hex');
 }
 
-function parseCallbackData(req, rawBody) {
+function parseCallbackData(req, rawBody, publicUrl) {
   const params = req.method === 'POST'
     ? new URLSearchParams(rawBody)
-    : new URL(req.url, 'http://localhost').searchParams;
+    : new URL(req.url, publicUrl).searchParams;
   return { data: params.get('data'), signature: params.get('ss1') };
 }
 
@@ -130,7 +130,6 @@ async function handleCheckout(req, res) {
     p_phone: phone,
   });
 
-  console.log(paymentData.toString());
   if (comment) paymentData.set('p_street', comment);
 
   const encodedData = Buffer.from(paymentData.toString(), 'utf8').toString('base64');
@@ -164,7 +163,7 @@ async function handleCallback(req, res) {
     }
   }
 
-  const { data, signature } = parseCallbackData(req, rawBody);
+  const { data, signature } = parseCallbackData(req, rawBody, credentials.publicUrl);
   if (!data || !signature || !/^[a-f\d]{32}$/i.test(signature)) {
     res.writeHead(400);
     return res.end('Invalid callback signature.');
@@ -214,7 +213,7 @@ async function handleCallback(req, res) {
 
 export async function payseraApiMiddleware(req, res, next) {
   try {
-    const pathname = new URL(req.url, 'http://localhost').pathname;
+    const [pathname] = req.url.split('?', 1);
     if (pathname === '/accept' && req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
       return res.end('Payment completed.');
