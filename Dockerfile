@@ -22,5 +22,5 @@ COPY server.mjs ./
 COPY server ./server
 COPY --from=build /app/dist ./dist
 
-EXPOSE 3000
+EXPOSE 80
 CMD ["node", "server.mjs"]
